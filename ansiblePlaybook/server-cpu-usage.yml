@@ -1,0 +1,10 @@
+- name: Print debug infomation eg1
+  hosts: "{{host}}"
+  become: no
+  gather_facts: no
+  tasks:
+    - name: "Statistics CPU Memory Disk Utilization..."
+      shell: |
+        top -bn1 | grep load | awk '{printf "CPU Load: %.2f\n", $(NF-2)}'
+      register: out
+    - debug: var=out.stdout_lines

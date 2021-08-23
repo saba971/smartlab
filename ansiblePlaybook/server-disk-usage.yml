@@ -1,0 +1,12 @@
+- name: Print debug infomation eg1
+  hosts: "{{host}}"
+  become: no
+  gather_facts: no
+  tasks:
+    - name: "Statistics CPU Memory Disk Utilization..."
+      shell: |
+        df -h | awk '{ print $(NF-1),$(NF) }'| grep -vE '^Mounted|tmpfs|cdrom|storage|ftpserver|fttx/SWdel'
+      async: 90
+      poll: 10
+      register: out
+    - debug: var=out.stdout_lines

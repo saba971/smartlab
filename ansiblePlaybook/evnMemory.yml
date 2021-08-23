@@ -1,0 +1,16 @@
+- name: Print debug infomation eg1
+  hosts: "{{host}}"
+  connection: local
+  gather_facts: F
+  tasks:
+  - name: memory-usage
+    telnet:
+       user: "{{username}}"
+       password: "{{password}}"
+       login_prompt: "{{loginPrompt}}"
+       password_prompt: "{{passwordPrompt}}"
+       timeout: "{{timeout}}"
+       prompts: "{{promptList}}"
+       command: "{{memoryCmdList}}"
+    register: result
+  - debug: var=result.output
